@@ -6,12 +6,17 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
-app.use(express.static(path.join(__dirname, "../")));
+// Path ke frontend build
+const frontendPath = path.join(__dirname, "../apps/playground/out");
 
+// Serve static files
+app.use(express.static(frontendPath));
+
+// SPA fallback
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../index.html"));
+  res.sendFile(path.join(frontendPath, "index.html"));
 });
 
 app.listen(PORT, () => {
