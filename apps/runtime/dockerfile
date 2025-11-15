@@ -1,11 +1,41 @@
-# build stage
-FROM rust:1.72 as builder
-WORKDIR /app
-COPY . .
-RUN cargo build --release
+# ======================
+# FRONTEND BUILD
+# ======================
+FROM node:18 AS frontend-builder
 
-# runtime stage
-FROM debian:bookworm-slim
-COPY --from=builder /app/target/release/runtime /usr/local/bin/runtime
-EXPOSE 8080
-CMD ["/usr/local/bin/runtime"]
+WORKDIR /app
+
+COPY apps/playground/package*.json ./apps/playground/
+WORKDIR /app/apps/playground
+RUN npm install
+
+# copy source
+COPY apps/playground ./apps/playground
+
+# build output to /app/apps/playground/out
+RUN npm run build
+
+
+# ======================
+# SERVER RUNTIME
+# ======================
+FROM node:18 AS runtime
+
+WORKDIR /app
+
+# copy server
+COPY server/package*.json ./server/
+WORKDIR /app/server
+RUN npm install --omit=dev
+
+# copy server source
+COPY server ./server
+
+# copy frontend output to root (karena server nyari ../index.html)
+COPY --from=frontend-builder /app/apps/playground/out /app/
+
+WORKDIR /app/server
+
+EXPOSE 3000
+
+CMD ["node", "index.js"]
