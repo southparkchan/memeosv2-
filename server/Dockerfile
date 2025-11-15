@@ -5,7 +5,7 @@ WORKDIR /workspace
 # install deps for frontend
 COPY apps/playground/package*.json apps/playground/
 WORKDIR /workspace/apps/playground
-RUN npm install   # <--- GANTI INI
+RUN npm install    
 
 # copy rest frontend source and build
 COPY apps/playground/ .
@@ -18,7 +18,7 @@ WORKDIR /app
 # copy server package.json and install deps
 COPY server/package*.json ./server/
 WORKDIR /app/server
-RUN npm install #omit=dev   
+RUN npm install ..omit=dev   
 
 # copy server source
 COPY server/ ./server
