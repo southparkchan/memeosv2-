@@ -1,90 +1,239 @@
+// apps/playground/pages/index.js
+import { useEffect, useState, useRef } from "react";
+
+/** Simple styling inline to keep this file standalone; you can replace with Tailwind. */
+const container = { fontFamily: "Inter, Arial, sans-serif", minHeight: "100vh", background: "#0b1020", color: "#fff" };
+const main = { display: "flex", gap: 24, padding: 28 };
+const card = { background: "#0f1724", padding: 18, borderRadius: 12, border: "1px solid #16202b" };
+
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white flex">
-      {/* Sidebar */}
-      <aside className="w-64 bg-[#0f0f0f] border-r border-[#222] p-6 sticky top-0 h-screen">
-        <h1 className="text-2xl font-bold mb-10">MemeOS</h1>
-
-        <nav className="space-y-4 text-gray-300">
-          <a href="#" className="block hover:text-white">Dashboard</a>
-          <a href="#" className="block hover:text-white">MemeVM</a>
-          <a href="#" className="block hover:text-white">ZK Tools</a>
-          <a href="#" className="block hover:text-white">Playground</a>
-          <a href="#" className="block hover:text-white">Explorer</a>
-          <a href="#" className="block hover:text-white">Settings</a>
-        </nav>
-      </aside>
-
-      {/* Main */}
-      <main className="flex-1 p-10">
-        
-        {/* Banner */}
-        <section className="p-10 bg-gradient-to-r from-purple-700/30 to-pink-600/30 rounded-xl border border-[#222] mb-12">
-          <h2 className="text-4xl font-bold mb-2">⚡ MemeOS Playground</h2>
-          <p className="text-gray-300 text-lg">
-            Build · Test · Execute MemeVM modules directly on your browser.
-          </p>
-        </section>
-
-        {/* Feature Cards */}
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-14">
-          <div className="p-6 bg-[#111] border border-[#222] rounded-xl hover:bg-[#161616] transition">
-            <h3 className="text-xl font-semibold mb-2">🛠 MemeVM Runtime</h3>
-            <p className="text-gray-400 text-sm">
-              Execute scripts, emulate computations, and inspect memetic state.
-            </p>
+    <div style={container}>
+      <Topbar />
+      <div style={main}>
+        <div style={{ flex: 1 }}>
+          <Hero />
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 18, marginTop: 18 }}>
+            <div style={card}><MemeVMRunner /></div>
+            <div style={card}><ZKDemo /></div>
+            <div style={card}><UploadMeme /></div>
+            <div style={card}><LiveFeed /></div>
           </div>
+        </div>
 
-          <div className="p-6 bg-[#111] border border-[#222] rounded-xl hover:bg-[#161616] transition">
-            <h3 className="text-xl font-semibold mb-2">🧪 ZK Verifier</h3>
-            <p className="text-gray-400 text-sm">
-              Generate & verify zero-knowledge proofs inside the browser.
-            </p>
+        <aside style={{ width: 340 }}>
+          <div style={card}>
+            <WalletConnect />
           </div>
-
-          <div className="p-6 bg-[#111] border border-[#222] rounded-xl hover:bg-[#161616] transition">
-            <h3 className="text-xl font-semibold mb-2">📡 Onchain Feed</h3>
-            <p className="text-gray-400 text-sm">
-              Real-time memetoken state stream from your selected chain.
-            </p>
+          <div style={{ ...card, marginTop: 18 }}>
+            <StatsPanel />
           </div>
-        </section>
-
-        {/* Stats Section */}
-        <section className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-14">
-          <StatCard label="Runtime OPS" value="14.2k" />
-          <StatCard label="ZK Proofs" value="128" />
-          <StatCard label="Meme Modules" value="42" />
-          <StatCard label="Chain Sync" value="Online" />
-        </section>
-
-        {/* Code Sandbox */}
-        <section className="p-6 bg-[#111] border border-[#222] rounded-xl mb-10">
-          <h3 className="text-xl font-semibold mb-4">💻 MemeVM Sandbox</h3>
-          <p className="text-gray-400 mb-3 text-sm">
-            Run sample scripts directly:
-          </p>
-
-          <code className="block p-4 bg-black rounded-lg border border-[#333] text-sm">
-            {"const result = MemeVM.exec(`meme.power(9000)`)"}  
-          </code>
-        </section>
-
-        {/* Footer */}
-        <footer className="text-gray-500 text-sm mt-10">
-          MemeOS • Web3 Cultural Compute Layer • 2025
-        </footer>
-
-      </main>
+        </aside>
+      </div>
     </div>
   );
 }
 
-function StatCard({ label, value }) {
+/* --- Components --- */
+
+function Topbar() {
   return (
-    <div className="p-6 bg-[#111] border border-[#222] rounded-xl text-center">
-      <p className="text-gray-400 text-sm">{label}</p>
-      <h4 className="text-2xl font-bold mt-1">{value}</h4>
+    <div style={{ display: "flex", justifyContent: "space-between", padding: "12px 28px", alignItems: "center", borderBottom: "1px solid #0f1724" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+        <img src="/sparkchan-tech.png" width={44} style={{ borderRadius: 8 }} />
+        <div>
+          <div style={{ fontWeight: 800, fontSize: 18 }}>MemeOS</div>
+          <div style={{ fontSize: 12, opacity: 0.7 }}>Kawaii · zk · Runtime</div>
+        </div>
+      </div>
+      <div style={{ opacity: 0.8 }}>Playground • Live</div>
+    </div>
+  );
+}
+
+function Hero() {
+  return (
+    <div style={{ marginTop: 18, padding: 20, borderRadius: 12, background: "linear-gradient(90deg,#7c3aed11,#ec489911)", border: "1px solid #2b2b34" }}>
+      <h1 style={{ margin: 0, fontSize: 28 }}>⚡ MemeOS Playground</h1>
+      <p style={{ marginTop: 8, color: "#cbd5e1" }}>
+        Build, test, and execute MemeVM modules — try uploading an image, run the MemeVM, and optionally generate a zk-proof (mock).
+      </p>
+    </div>
+  );
+}
+
+/* MemeVM Runner: runs simple JS scripts via server /api/run */
+function MemeVMRunner() {
+  const [code, setCode] = useState(`// Example: return meme.power(9000)\nreturn meme.power(9000);`);
+  const [out, setOut] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  async function run() {
+    setLoading(true);
+    setOut("");
+    try {
+      const res = await fetch("/api/run", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code })
+      });
+      const json = await res.json();
+      setOut(JSON.stringify(json, null, 2));
+    } catch (e) {
+      setOut("Error: " + e.message);
+    } finally { setLoading(false); }
+  }
+
+  return (
+    <>
+      <h3>MemeVM Sandbox</h3>
+      <textarea value={code} onChange={e => setCode(e.target.value)} style={{ width: "100%", height: 120, marginTop: 8, background: "#071022", color: "#9ae6b4", padding: 10, borderRadius: 8 }} />
+      <div style={{ display: "flex", gap: 8, marginTop: 8 }}>
+        <button onClick={run} style={{ padding: "8px 12px", background: "#7c3aed", borderRadius: 8, border: "none", cursor: "pointer" }}>{loading ? "Running..." : "Run"}</button>
+        <button onClick={() => { setCode(""); setOut(""); }} style={{ padding: "8px 12px", background: "#0b1220", borderRadius: 8 }}>Clear</button>
+      </div>
+      <pre style={{ marginTop: 10, background: "#031124", padding: 10, borderRadius: 8, overflowX: "auto" }}>{out || "No output yet"}</pre>
+    </>
+  );
+}
+
+/* ZK Demo: sends a payload to /api/prove (mock) and shows proof */
+function ZKDemo() {
+  const [payload, setPayload] = useState("{\"meme\":\"kawaii\"}");
+  const [proof, setProof] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  async function genProof() {
+    setLoading(true); setProof(null);
+    try {
+      const res = await fetch("/api/prove", { method: "POST", headers: {"Content-Type":"application/json"}, body: payload });
+      const json = await res.json();
+      setProof(json);
+    } catch (e) {
+      setProof({ error: e.message });
+    } finally { setLoading(false); }
+  }
+
+  return (
+    <>
+      <h3>zk-Demo (mock)</h3>
+      <textarea value={payload} onChange={e=>setPayload(e.target.value)} style={{ width: "100%", height: 80, background: "#071022", color: "#c4b5fd", padding: 10, borderRadius: 8 }} />
+      <div style={{ display: "flex", gap: 8, marginTop: 8 }}>
+        <button onClick={genProof} style={{ padding: "8px 12px", background: "#06b6d4", borderRadius: 8 }}>{loading ? "Generating..." : "Generate proof"}</button>
+      </div>
+      <pre style={{ marginTop: 10, background: "#031124", padding: 10, borderRadius: 8 }}>{proof ? JSON.stringify(proof, null, 2) : "No proof yet"}</pre>
+    </>
+  );
+}
+
+/* Upload image -> send to /api/upload (server stores and returns URL + runs optional meme generation) */
+function UploadMeme() {
+  const inputRef = useRef();
+  const [resp, setResp] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  async function upload() {
+    const f = inputRef.current.files[0];
+    if (!f) return alert("choose a file");
+    setLoading(true);
+    const fd = new FormData();
+    fd.append("file", f);
+    try {
+      const res = await fetch("/api/upload", { method: "POST", body: fd });
+      const json = await res.json();
+      setResp(json);
+    } catch (e) {
+      setResp({ error: e.message });
+    } finally { setLoading(false); }
+  }
+
+  return (
+    <>
+      <h3>Upload Meme Image</h3>
+      <input ref={inputRef} type="file" accept="image/*" style={{ marginTop: 8 }} />
+      <div style={{ marginTop: 8 }}>
+        <button onClick={upload} style={{ padding: "8px 12px", background: "#ef4444", borderRadius: 8 }}>{loading ? "Uploading..." : "Upload & Generate"}</button>
+      </div>
+      <pre style={{ marginTop: 10, background: "#031124", padding: 10, borderRadius: 8 }}>{resp ? JSON.stringify(resp, null, 2) : "No upload yet"}</pre>
+    </>
+  );
+}
+
+/* Live feed: fetches /api/feed which proxies a Solana RPC endpoint to show latest block or slot */
+function LiveFeed() {
+  const [feed, setFeed] = useState([]);
+  useEffect(()=> {
+    let mounted = true;
+    async function refresh(){
+      try {
+        const res = await fetch("/api/feed");
+        const json = await res.json();
+        if(mounted) setFeed(json);
+      } catch(e){}
+    }
+    refresh();
+    const iid = setInterval(refresh, 8000);
+    return ()=>{ mounted=false; clearInterval(iid); }
+  }, []);
+  return (
+    <>
+      <h3>Onchain Feed (Solana)</h3>
+      <div style={{ maxHeight: 220, overflowY: "auto", marginTop: 8 }}>
+        {feed.length===0 ? <div style={{opacity:.6}}>No feed yet</div> : feed.map((f,i)=>(
+          <div key={i} style={{ padding:8, borderBottom: "1px solid #0b1220" }}>
+            <div style={{ fontSize: 12, opacity:.8 }}>{f.time}</div>
+            <div style={{ fontSize: 13 }}>{f.text}</div>
+          </div>
+        ))}
+      </div>
+    </>
+  );
+}
+
+/* Wallet connect simplified for Phantom */
+function WalletConnect() {
+  const [addr, setAddr] = useState(null);
+
+  useEffect(()=>{
+    if (typeof window !== "undefined" && window?.solana?.isPhantom) {
+      window.solana.on("connect", () => setAddr(window.solana.publicKey.toString()));
+      window.solana.on("disconnect", () => setAddr(null));
+    }
+  },[]);
+
+  async function connect() {
+    if (typeof window === "undefined") return alert("Open in browser");
+    if (!window.solana || !window.solana.isPhantom) return alert("Install Phantom wallet");
+    try {
+      const res = await window.solana.connect();
+      setAddr(res.publicKey.toString());
+    } catch(e){ console.error(e); }
+  }
+
+  return (
+    <div>
+      <h4 style={{ marginTop: 0 }}>Wallet</h4>
+      <div style={{ marginTop: 8 }}>
+        {addr ? <div>Connected: <code style={{ color: "#9ae6b4" }}>{addr}</code></div> : <button onClick={connect} style={{ padding: "8px 12px", background: "#06b6d4", borderRadius: 8 }}>Connect Phantom</button>}
+      </div>
+    </div>
+  );
+}
+
+function StatsPanel(){
+  return (
+    <div>
+      <h4 style={{ margin: 0 }}>Live Stats</h4>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginTop: 8 }}>
+        <div style={{ background: "#081024", padding: 10, borderRadius: 8 }}>
+          <div style={{ opacity: .7 }}>Runtime OPS</div>
+          <div style={{ fontWeight:800 }}>14.2k</div>
+        </div>
+        <div style={{ background: "#081024", padding: 10, borderRadius: 8 }}>
+          <div style={{ opacity: .7 }}>ZK Proofs</div>
+          <div style={{ fontWeight:800 }}>128</div>
+        </div>
+      </div>
     </div>
   );
 }
