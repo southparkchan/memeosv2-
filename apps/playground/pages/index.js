@@ -1,96 +1,35 @@
 export default function Home() {
+  return (
+    <div style={{
+      fontFamily: "Arial, sans-serif",
+      background: "#0d0d0d",
+      color: "#fff",
+      minHeight: "100vh",
+      padding: "40px"
+    }}>
+      <h1 style={{ fontSize: "32px", fontWeight: "bold" }}>
+        MemeOS Dashboard 🚀
+      </h1>
 
-  return 
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MemeOS Dashboard — SPARKCHAN</title>
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body>
+      <p style={{ opacity: 0.7, marginTop: "10px" }}>
+        Playground UI berhasil di-load 🎉
+      </p>
 
-  <!-- TOP NAV -->
-  <nav class="nav">
-    <div class="nav-left">
-      <img src="sparkchan-tech.png" class="logo" />
-      <span class="nav-title">MemeOS Dashboard</span>
-    </div>
-    <div class="nav-right">
-      <button class="btn-primary">Connect Wallet</button>
-    </div>
-  </nav>
+      <div style={{
+        marginTop: "40px",
+        padding: "20px",
+        background: "#1a1a1a",
+        borderRadius: "12px",
+        border: "1px solid #333"
+      }}>
+        <h2 style={{ fontSize: "24px", marginBottom: "10px" }}>
+          Control Center
+        </h2>
 
-  <!-- HEADER HERO -->
-  <header class="hero">
-    <div class="hero-text">
-      <h1>🌸 Sparkchan Control Center</h1>
-      <p>Your Kawaii-powered MemeOS development dashboard.</p>
-    </div>
-    <img src="sparkchan-tech.png" class="hero-img" />
-  </header>
-
-  <!-- DASHBOARD GRID -->
-  <section class="grid">
-
-    <div class="card metric">
-      <h3>Total Actions</h3>
-      <div class="metric-value">12,930</div>
-      <div class="metric-sub">+12% this week</div>
-    </div>
-
-    <div class="card metric">
-      <h3>Active Users</h3>
-      <div class="metric-value">1,422</div>
-      <div class="metric-sub">+5.8% today</div>
-    </div>
-
-    <div class="card metric">
-      <h3>Proofs Generated</h3>
-      <div class="metric-value">548</div>
-      <div class="metric-sub">zk-SNARK activity</div>
-    </div>
-
-    <div class="card metric">
-      <h3>MemeVM Ops</h3>
-      <div class="metric-value">98 ops/sec</div>
-      <div class="metric-sub">Stable</div>
-    </div>
-
-  </section>
-
-  <!-- MAIN PANEL -->
-  <section class="panel">
-    <h2>🎀 Module Status</h2>
-
-    <div class="module-list">
-
-      <div class="module-card">
-        <h3>✨ MemeVM Core</h3>
-        <p>Runtime active and stable.</p>
-        <button class="btn-small">View</button>
+        <p style={{ opacity: 0.8 }}>
+          Semua modul MemeOS siap dipasang.
+        </p>
       </div>
-
-      <div class="module-card">
-        <h3>🔮 zk-Meme Engine</h3>
-        <p>Proof generator online.</p>
-        <button class="btn-small">View</button>
-      </div>
-
-      <div class="module-card">
-        <h3>🎨 Culture Engine</h3>
-        <p>State sync: Normal</p>
-        <button class="btn-small">View</button>
-      </div>
-
-      <div class="module-card">
-        <h3>📡 Interchain Bridge</h3>
-        <p>Wormhole ready.</p>
-        <button class="btn-small">View</button>
-      </div>
-
     </div>
-  </section>
-
-</body>
-</html>
+  );
+}
