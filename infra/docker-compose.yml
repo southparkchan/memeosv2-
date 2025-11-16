@@ -1,25 +1,18 @@
-version: '3.8'
-
+version: "3.8"
 services:
-  postgres:
-    image: postgres:15
+  server:
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+    ports: ["8080:8080"]
     environment:
-      POSTGRES_USER: spark
-      POSTGRES_PASSWORD: spark
-      POSTGRES_DB: sparkdb
-    ports:
-      - "5432:5432"
+      - PROOF_SERVICE_URL=http://proof-service:3000/prove
+      - SOLANA_RPC=https://api.mainnet-beta.solana.com
+    depends_on:
+      - proof-service
 
-  runtime:
-    build: ../apps/runtime
-    ports:
-      - "8080:8080"
-
-  proof:
-    build: ../apps/proof-service
-    ports:
-      - "3000:3000"
-
-  indexer:
-    build: ../apps/indexer
-
+  proof-service:
+    build:
+      context: proof-service
+      dockerfile: Dockerfile # or use node:18 image & copy index.js
+    ports: ["3000:3000"]
