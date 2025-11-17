@@ -1,16 +1,25 @@
+
 {
-  "name": "playground",
-  "version": "1.0.0",
+  "name": "memeos",
+  "version": "2.0.0",
+  "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
+    "build": "next build && next export",
+    "start": "serve out"
   },
   "dependencies": {
     "next": "14.1.0",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "@sparkchan/memeos-sdk": "workspace:*",
-    "tailwindcss": "^3.4.0"
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+
+    "@solana/web3.js": "^1.95.3",
+    "@solana/wallet-adapter-base": "^0.19.8",
+    "@solana/wallet-adapter-react": "^0.19.8",
+    "@solana/wallet-adapter-react-ui": "^0.19.8",
+    "@solana/wallet-adapter-wallets": "^0.19.8",
+    "@solana/wallet-adapter-phantom": "^0.19.8",
+
+    "serve": "^14.2.2"
   }
 }
