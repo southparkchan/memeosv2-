@@ -9,7 +9,7 @@ export default function Home() {
 
       <div className="bg-neutral-900 p-6 rounded-xl border border-neutral-700">
         <p className="text-neutral-300">
-          Kamu sudah bisa connect/disconnect wallet + siap dipublish.
+         
         </p>
       </div>
     </div>
