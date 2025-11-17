@@ -1,18 +1,25 @@
-import WalletButton from "../components/WalletButton.jsx";
+"use client";
 
+import { useMemo } from "react";
+import { ConnectionProvider, WalletProvider } from "@solana/wallet-adapter-react";
+import { PhantomWalletAdapter } from "@solana/wallet-adapter-wallets";
+import WalletButton from "@/components/WalletButton";
 
-export default function Home() {
+export default function Page() {
+  const endpoint = "https://api.mainnet-beta.solana.com";
+
+  const wallets = useMemo(() => [ new PhantomWalletAdapter() ], []);
+
   return (
-    <div className="p-8 flex flex-col gap-6">
-      <h1 className="text-4xl font-bold text-white">MemeOS Playground</h1>
+    <ConnectionProvider endpoint={endpoint}>
+      <WalletProvider wallets={wallets} autoConnect={false}>
+        <div style={{ textAlign: "center", marginTop: "80px" }}>
+          <h1>MemeOS v2 🚀</h1>
+          <p>Now with full wallet connect / disconnect</p>
 
-      <WalletButton />
-
-      <div className="bg-neutral-900 p-6 rounded-xl border border-neutral-700">
-        <p className="text-neutral-300">
-         
-        </p>
-      </div>
-    </div>
+          <WalletButton />
+        </div>
+      </WalletProvider>
+    </ConnectionProvider>
   );
 }
