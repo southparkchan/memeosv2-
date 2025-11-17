@@ -74,6 +74,8 @@ app.post("/api/prove", async (req, res) => {
 
 // ----------------- API: onchain feed (Solana sample) -----------------
 app.get("/api/feed", async (req, res) => {
+  res.sendFile(path.join(__dirname, "../public/index.html"));
+});
   try {
     // simple Solana RPC example: getRecentBlockhash or getSlot
     const RPC = process.env.SOLANA_RPC || "https://api.mainnet-beta.solana.com";
