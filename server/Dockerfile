@@ -2,7 +2,7 @@
 FROM node:18-alpine AS builder
 WORKDIR /app
 
-COPY playgournd/package.json
+COPY playground/package.json
 RUN npm install
 
 COPY . .
